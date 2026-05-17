@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 from html import escape
+from pathlib import Path
 from textwrap import dedent
 from typing import Iterable, Mapping
 
 import streamlit as st
+from streamlit.runtime.scriptrunner import get_script_run_ctx
 
 
 PALETTE = {
@@ -523,6 +525,15 @@ def _badge_html(label: str, color: str) -> str:
     return f'<span class="ss-badge" style="background:{color};">{escape(str(label))}</span>'
 
 
+def _home_page_path() -> str:
+    """Return the active Streamlit entrypoint for the home page link."""
+
+    ctx = get_script_run_ctx()
+    if ctx and ctx.main_script_path:
+        return Path(ctx.main_script_path).name
+    return "streamlit_app.py" if Path("streamlit_app.py").exists() else "app.py"
+
+
 def render_sidebar() -> None:
     with st.sidebar:
         st.html(
@@ -536,7 +547,7 @@ def render_sidebar() -> None:
             """,
         )
         st.html('<div class="ss-sidebar-section">Command Center</div>')
-        st.page_link("app.py", label="Executive Overview")
+        st.page_link(_home_page_path(), label="Executive Overview")
         st.page_link("pages/2_Live_Pricing_Demo.py", label="Pricing Workbench")
         st.page_link("pages/3_Demand_Intelligence.py", label="Demand Intelligence")
         st.page_link("pages/4_Revenue_Impact.py", label="Revenue Impact")
