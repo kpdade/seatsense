@@ -1,0 +1,938 @@
+{
+  "generated_at_utc": "2026-05-17T05:10:23.423622+00:00",
+  "dataset": {
+    "source": "data/model_training_data.csv",
+    "active_csv": "data/model_training_data.csv",
+    "rows": 20500,
+    "games": 410,
+    "seasons": 5,
+    "seat_sections": [
+      "Club Level",
+      "Courtside/Premium",
+      "Lower Center",
+      "Lower Corner",
+      "Lower Sideline",
+      "Standing Room",
+      "Suite",
+      "Upper Baseline",
+      "Upper Center",
+      "Upper Sideline"
+    ],
+    "seat_sections_count": 10,
+    "pricing_windows": [
+      "14_days_out",
+      "2_days_out",
+      "30_days_out",
+      "7_days_out",
+      "day_of_game"
+    ],
+    "pricing_windows_count": 5,
+    "class_distribution": {
+      "Low": 9003,
+      "Medium": 8397,
+      "High": 3100
+    },
+    "scalper_risk_distribution": {
+      "Low": 10159,
+      "High": 5595,
+      "Medium": 4746
+    },
+    "observation_unit": "game_id + seat_section + pricing_window",
+    "synthetic_data_note": "Semi-synthetic data calibrated to realistic sports ticketing dynamics; not real venue transaction data."
+  },
+  "split": {
+    "strategy": "Time-based split by season; all rows for the same game_id remain in one split.",
+    "grouping": "game_id",
+    "train_seasons": [
+      2021,
+      2022,
+      2023
+    ],
+    "validation_seasons": [
+      2024
+    ],
+    "test_seasons": [
+      2025
+    ],
+    "train_rows": 12300,
+    "validation_rows": 4100,
+    "test_rows": 4100,
+    "train_games": 246,
+    "validation_games": 82,
+    "test_games": 82,
+    "demand_tier_distribution": {
+      "train": {
+        "Low": 0.4514,
+        "Medium": 0.4046,
+        "High": 0.1441
+      },
+      "validation": {
+        "Low": 0.4327,
+        "Medium": 0.4083,
+        "High": 0.159
+      },
+      "test": {
+        "Medium": 0.4261,
+        "Low": 0.409,
+        "High": 0.1649
+      }
+    },
+    "season_coverage": {
+      "train": [
+        2021,
+        2022,
+        2023
+      ],
+      "validation": [
+        2024
+      ],
+      "test": [
+        2025
+      ]
+    }
+  },
+  "leakage_audit": {
+    "generated_at_utc": "2026-05-17T05:09:03.474260+00:00",
+    "passed": true,
+    "strategy": "Model features are checked against target, post-event outcome, recommended-price, and fairness-only columns before training.",
+    "feature_count": 52,
+    "forbidden_columns_found_in_features": [],
+    "missing_feature_columns": [],
+    "forbidden_columns_available_in_dataset": [
+      "actual_secondary_market_gap",
+      "affordability_index",
+      "affordability_segment",
+      "demand_index",
+      "demand_tier",
+      "final_attendance_rate",
+      "final_sell_through_rate",
+      "local_income_proxy",
+      "optimal_price_oracle",
+      "realized_demand_score",
+      "realized_revenue",
+      "recommended_price_target",
+      "revenue_per_available_seat",
+      "scalper_risk_label",
+      "scalper_risk_tier",
+      "unsold_inventory_pct"
+    ],
+    "fairness_only_columns": [
+      "affordability_index",
+      "affordability_segment",
+      "local_income_proxy"
+    ],
+    "message": "No forbidden target/post-event/fairness-only columns are used as model features."
+  },
+  "baseline_model": {
+    "name": "Decision Tree baseline",
+    "train": {
+      "accuracy": 0.7685,
+      "precision_macro": 0.5178,
+      "recall_macro": 0.5978,
+      "f1_macro": 0.5528,
+      "precision_weighted": 0.6701,
+      "recall_weighted": 0.7685,
+      "f1_weighted": 0.7132,
+      "high_demand_precision": 0.0,
+      "high_demand_recall": 0.0,
+      "high_demand_f1": 0.0,
+      "classification_report": {
+        "Low": {
+          "precision": 0.8915515130313101,
+          "recall": 0.9180475504322767,
+          "f1-score": 0.904605555062561,
+          "support": 5552.0
+        },
+        "Medium": {
+          "precision": 0.661704390095701,
+          "recall": 0.8754019292604501,
+          "f1-score": 0.7536984168180638,
+          "support": 4976.0
+        },
+        "High": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 1772.0
+        },
+        "accuracy": 0.7685365853658537,
+        "macro avg": {
+          "precision": 0.5177519677090037,
+          "recall": 0.5978164932309089,
+          "f1-score": 0.552767990626875,
+          "support": 12300.0
+        },
+        "weighted avg": {
+          "precision": 0.6701248004443937,
+          "recall": 0.7685365853658537,
+          "f1-score": 0.7132336068125222,
+          "support": 12300.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          5097,
+          455,
+          0
+        ],
+        [
+          620,
+          4356,
+          0
+        ],
+        [
+          0,
+          1772,
+          0
+        ]
+      ],
+      "roc_auc_ovr_macro": 0.8234
+    },
+    "validation": {
+      "accuracy": 0.7398,
+      "precision_macro": 0.4995,
+      "recall_macro": 0.5858,
+      "f1_macro": 0.5375,
+      "precision_weighted": 0.6329,
+      "recall_weighted": 0.7398,
+      "f1_weighted": 0.68,
+      "high_demand_precision": 0.0,
+      "high_demand_recall": 0.0,
+      "high_demand_f1": 0.0,
+      "classification_report": {
+        "Low": {
+          "precision": 0.862013851891316,
+          "recall": 0.9120631341600902,
+          "f1-score": 0.8863325116406464,
+          "support": 1774.0
+        },
+        "Medium": {
+          "precision": 0.6365272154745839,
+          "recall": 0.8452807646356033,
+          "f1-score": 0.7261996407492943,
+          "support": 1674.0
+        },
+        "High": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 652.0
+        },
+        "accuracy": 0.7397560975609756,
+        "macro avg": {
+          "precision": 0.49951368912196664,
+          "recall": 0.5857812995985645,
+          "f1-score": 0.5375107174633136,
+          "support": 4100.0
+        },
+        "weighted avg": {
+          "precision": 0.6328680809657677,
+          "recall": 0.7397560975609756,
+          "f1-score": 0.6800029449426404,
+          "support": 4100.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          1618,
+          156,
+          0
+        ],
+        [
+          259,
+          1415,
+          0
+        ],
+        [
+          0,
+          652,
+          0
+        ]
+      ],
+      "roc_auc_ovr_macro": 0.8096
+    },
+    "test": {
+      "accuracy": 0.7366,
+      "precision_macro": 0.5043,
+      "recall_macro": 0.5881,
+      "f1_macro": 0.54,
+      "precision_weighted": 0.6297,
+      "recall_weighted": 0.7366,
+      "f1_weighted": 0.6752,
+      "high_demand_precision": 0.0,
+      "high_demand_recall": 0.0,
+      "high_demand_f1": 0.0,
+      "classification_report": {
+        "Low": {
+          "precision": 0.8737522019964769,
+          "recall": 0.8872987477638641,
+          "f1-score": 0.8804733727810651,
+          "support": 1677.0
+        },
+        "Medium": {
+          "precision": 0.6391322486441385,
+          "recall": 0.8769318832283916,
+          "f1-score": 0.7393822393822393,
+          "support": 1747.0
+        },
+        "High": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 676.0
+        },
+        "accuracy": 0.7365853658536585,
+        "macro avg": {
+          "precision": 0.5042948168802052,
+          "recall": 0.5880768769974186,
+          "f1-score": 0.5399518707211014,
+          "support": 4100.0
+        },
+        "weighted avg": {
+          "precision": 0.6297186539340004,
+          "recall": 0.7365853658536585,
+          "f1-score": 0.675184053257224,
+          "support": 4100.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          1488,
+          189,
+          0
+        ],
+        [
+          215,
+          1532,
+          0
+        ],
+        [
+          0,
+          676,
+          0
+        ]
+      ],
+      "roc_auc_ovr_macro": 0.8009
+    }
+  },
+  "final_model": {
+    "name": "Random Forest demand classifier",
+    "train": {
+      "accuracy": 0.9285,
+      "precision_macro": 0.9132,
+      "recall_macro": 0.9357,
+      "f1_macro": 0.9233,
+      "precision_weighted": 0.9298,
+      "recall_weighted": 0.9285,
+      "f1_weighted": 0.9286,
+      "high_demand_precision": 0.8572,
+      "high_demand_recall": 0.9656,
+      "high_demand_f1": 0.9082,
+      "classification_report": {
+        "Low": {
+          "precision": 0.9565138282387191,
+          "recall": 0.9468659942363112,
+          "f1-score": 0.9516654598117307,
+          "support": 5552.0
+        },
+        "Medium": {
+          "precision": 0.9259567387687188,
+          "recall": 0.8946945337620579,
+          "f1-score": 0.9100572363041701,
+          "support": 4976.0
+        },
+        "High": {
+          "precision": 0.8572144288577155,
+          "recall": 0.9655756207674944,
+          "f1-score": 0.9081740976645435,
+          "support": 1772.0
+        },
+        "accuracy": 0.9284552845528455,
+        "macro avg": {
+          "precision": 0.9132283319550512,
+          "recall": 0.9357120495886212,
+          "f1-score": 0.9232989312601481,
+          "support": 12300.0
+        },
+        "weighted avg": {
+          "precision": 0.9298462987341778,
+          "recall": 0.9284552845528455,
+          "f1-score": 0.9285671497386869,
+          "support": 12300.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          5257,
+          295,
+          0
+        ],
+        [
+          239,
+          4452,
+          285
+        ],
+        [
+          0,
+          61,
+          1711
+        ]
+      ],
+      "roc_auc_ovr_macro": 0.9905
+    },
+    "validation": {
+      "accuracy": 0.8676,
+      "precision_macro": 0.857,
+      "recall_macro": 0.8709,
+      "f1_macro": 0.8633,
+      "precision_weighted": 0.8678,
+      "recall_weighted": 0.8676,
+      "f1_weighted": 0.8672,
+      "high_demand_precision": 0.8178,
+      "high_demand_recall": 0.888,
+      "high_demand_f1": 0.8515,
+      "classification_report": {
+        "Low": {
+          "precision": 0.897834536368684,
+          "recall": 0.911499436302142,
+          "f1-score": 0.9046153846153846,
+          "support": 1774.0
+        },
+        "Medium": {
+          "precision": 0.8554368321810182,
+          "recall": 0.8130227001194743,
+          "f1-score": 0.8336906584992343,
+          "support": 1674.0
+        },
+        "High": {
+          "precision": 0.8177966101694916,
+          "recall": 0.8880368098159509,
+          "f1-score": 0.8514705882352941,
+          "support": 652.0
+        },
+        "accuracy": 0.8675609756097561,
+        "macro avg": {
+          "precision": 0.8570226595730647,
+          "recall": 0.8708529820791892,
+          "f1-score": 0.8632588771166376,
+          "support": 4100.0
+        },
+        "weighted avg": {
+          "precision": 0.8677958815657509,
+          "recall": 0.8675609756097561,
+          "f1-score": 0.8672060190645907,
+          "support": 4100.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          1617,
+          157,
+          0
+        ],
+        [
+          184,
+          1361,
+          129
+        ],
+        [
+          0,
+          73,
+          579
+        ]
+      ],
+      "roc_auc_ovr_macro": 0.9692
+    },
+    "test": {
+      "accuracy": 0.8671,
+      "precision_macro": 0.852,
+      "recall_macro": 0.8739,
+      "f1_macro": 0.8614,
+      "precision_weighted": 0.8692,
+      "recall_weighted": 0.8671,
+      "f1_weighted": 0.8673,
+      "high_demand_precision": 0.7822,
+      "high_demand_recall": 0.8979,
+      "high_demand_f1": 0.8361,
+      "classification_report": {
+        "Low": {
+          "precision": 0.9126506024096386,
+          "recall": 0.9033989266547406,
+          "f1-score": 0.9080011986814503,
+          "support": 1677.0
+        },
+        "Medium": {
+          "precision": 0.8611778846153846,
+          "recall": 0.8202633085289067,
+          "f1-score": 0.8402228085605394,
+          "support": 1747.0
+        },
+        "High": {
+          "precision": 0.7822164948453608,
+          "recall": 0.8979289940828402,
+          "f1-score": 0.8360881542699724,
+          "support": 676.0
+        },
+        "accuracy": 0.8670731707317073,
+        "macro avg": {
+          "precision": 0.8520149939567947,
+          "recall": 0.8738637430888292,
+          "f1-score": 0.8614373871706541,
+          "support": 4100.0
+        },
+        "weighted avg": {
+          "precision": 0.8692124817510988,
+          "recall": 0.8670731707317073,
+          "f1-score": 0.8672641095196478,
+          "support": 4100.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          1515,
+          162,
+          0
+        ],
+        [
+          145,
+          1433,
+          169
+        ],
+        [
+          0,
+          69,
+          607
+        ]
+      ],
+      "roc_auc_ovr_macro": 0.9688
+    },
+    "best_params": {
+      "model__n_estimators": 260,
+      "model__min_samples_split": 10,
+      "model__min_samples_leaf": 8,
+      "model__max_features": 0.65,
+      "model__max_depth": 10,
+      "model__class_weight": "balanced_subsample"
+    },
+    "cross_validation": {
+      "strategy": "GroupKFold by game_id on training seasons",
+      "metric": "macro_f1",
+      "mean": 0.8513,
+      "best_high_demand_recall_cv": 0.8604
+    },
+    "overfitting_check": {
+      "train_minus_validation_accuracy": 0.0609,
+      "flag": false
+    }
+  },
+  "sellthrough_regressor": {
+    "baseline": {
+      "name": "DummyRegressor mean baseline",
+      "validation": {
+        "mae": 0.085,
+        "rmse": 0.1042,
+        "r2": -0.0077,
+        "mape": 0.1198
+      },
+      "test": {
+        "mae": 0.0841,
+        "rmse": 0.1057,
+        "r2": -0.0014,
+        "mape": 0.1214
+      }
+    },
+    "final": {
+      "name": "Random Forest sell-through regressor",
+      "validation": {
+        "mae": 0.0451,
+        "rmse": 0.0574,
+        "r2": 0.6943,
+        "mape": 0.0624
+      },
+      "test": {
+        "mae": 0.0447,
+        "rmse": 0.0587,
+        "r2": 0.6915,
+        "mape": 0.0635
+      }
+    }
+  },
+  "scalper_risk_classifier": {
+    "baseline": {
+      "name": "Decision Tree baseline",
+      "validation": {
+        "accuracy": 0.8829,
+        "precision_macro": 0.8712,
+        "recall_macro": 0.8616,
+        "f1_macro": 0.8661,
+        "precision_weighted": 0.8829,
+        "recall_weighted": 0.8829,
+        "f1_weighted": 0.8827,
+        "high_demand_precision": 0.9494,
+        "high_demand_recall": 0.9028,
+        "high_demand_f1": 0.9255,
+        "classification_report": {
+          "Low": {
+            "precision": 0.9083255378858747,
+            "recall": 0.9372586872586872,
+            "f1-score": 0.9225653206650831,
+            "support": 2072.0
+          },
+          "Medium": {
+            "precision": 0.7557651991614256,
+            "recall": 0.7448347107438017,
+            "f1-score": 0.7502601456815817,
+            "support": 968.0
+          },
+          "High": {
+            "precision": 0.9494047619047619,
+            "recall": 0.9028301886792452,
+            "f1-score": 0.925531914893617,
+            "support": 1060.0
+          },
+          "accuracy": 0.8829268292682927,
+          "macro avg": {
+            "precision": 0.8711651663173541,
+            "recall": 0.861641195560578,
+            "f1-score": 0.866119127080094,
+            "support": 4100.0
+          },
+          "weighted avg": {
+            "precision": 0.8829268963187414,
+            "recall": 0.8829268292682927,
+            "f1-score": 0.882651462250014,
+            "support": 4100.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            1942,
+            130,
+            0
+          ],
+          [
+            196,
+            721,
+            51
+          ],
+          [
+            0,
+            103,
+            957
+          ]
+        ],
+        "roc_auc_ovr_macro": 0.965
+      },
+      "test": {
+        "accuracy": 0.8768,
+        "precision_macro": 0.8643,
+        "recall_macro": 0.8539,
+        "f1_macro": 0.8579,
+        "precision_weighted": 0.8734,
+        "recall_weighted": 0.8768,
+        "f1_weighted": 0.8742,
+        "high_demand_precision": 0.919,
+        "high_demand_recall": 0.936,
+        "high_demand_f1": 0.9274,
+        "classification_report": {
+          "Low": {
+            "precision": 0.8947113051916545,
+            "recall": 0.9384223918575063,
+            "f1-score": 0.9160457029309488,
+            "support": 1965.0
+          },
+          "Medium": {
+            "precision": 0.7790432801822323,
+            "recall": 0.6874371859296482,
+            "f1-score": 0.7303790710090764,
+            "support": 995.0
+          },
+          "High": {
+            "precision": 0.9190353143841516,
+            "recall": 0.9359649122807018,
+            "f1-score": 0.9274228596262495,
+            "support": 1140.0
+          },
+          "accuracy": 0.8768292682926829,
+          "macro avg": {
+            "precision": 0.8642632999193461,
+            "recall": 0.8539414966892854,
+            "f1-score": 0.8579492111887582,
+            "support": 4100.0
+          },
+          "weighted avg": {
+            "precision": 0.8734039114343549,
+            "recall": 0.8768292682926829,
+            "f1-score": 0.8741509858261634,
+            "support": 4100.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            1844,
+            121,
+            0
+          ],
+          [
+            217,
+            684,
+            94
+          ],
+          [
+            0,
+            73,
+            1067
+          ]
+        ],
+        "roc_auc_ovr_macro": 0.9609
+      }
+    },
+    "final": {
+      "name": "Random Forest scalper risk classifier",
+      "validation": {
+        "accuracy": 0.8966,
+        "precision_macro": 0.8845,
+        "recall_macro": 0.8825,
+        "f1_macro": 0.8834,
+        "precision_weighted": 0.8972,
+        "recall_weighted": 0.8966,
+        "f1_weighted": 0.8968,
+        "high_demand_precision": 0.9499,
+        "high_demand_recall": 0.9292,
+        "high_demand_f1": 0.9394,
+        "classification_report": {
+          "Low": {
+            "precision": 0.9260681709073452,
+            "recall": 0.930984555984556,
+            "f1-score": 0.9285198555956679,
+            "support": 2072.0
+          },
+          "Medium": {
+            "precision": 0.7775510204081633,
+            "recall": 0.7871900826446281,
+            "f1-score": 0.7823408624229979,
+            "support": 968.0
+          },
+          "High": {
+            "precision": 0.9498553519768563,
+            "recall": 0.9292452830188679,
+            "f1-score": 0.9394372913686219,
+            "support": 1060.0
+          },
+          "accuracy": 0.8965853658536586,
+          "macro avg": {
+            "precision": 0.8844915144307883,
+            "recall": 0.8824733072160172,
+            "f1-score": 0.8834326697957625,
+            "support": 4100.0
+          },
+          "weighted avg": {
+            "precision": 0.8971534904806315,
+            "recall": 0.8965853658536586,
+            "f1-score": 0.8968299084074207,
+            "support": 4100.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            1929,
+            143,
+            0
+          ],
+          [
+            154,
+            762,
+            52
+          ],
+          [
+            0,
+            75,
+            985
+          ]
+        ],
+        "roc_auc_ovr_macro": 0.9781
+      },
+      "test": {
+        "accuracy": 0.8934,
+        "precision_macro": 0.881,
+        "recall_macro": 0.8831,
+        "f1_macro": 0.882,
+        "precision_weighted": 0.8942,
+        "recall_weighted": 0.8934,
+        "f1_weighted": 0.8938,
+        "high_demand_precision": 0.9404,
+        "high_demand_recall": 0.9404,
+        "high_demand_f1": 0.9404,
+        "classification_report": {
+          "Low": {
+            "precision": 0.9279835390946503,
+            "recall": 0.9180661577608142,
+            "f1-score": 0.9229982092606804,
+            "support": 1965.0
+          },
+          "Medium": {
+            "precision": 0.7746062992125984,
+            "recall": 0.7909547738693468,
+            "f1-score": 0.78269517652909,
+            "support": 995.0
+          },
+          "High": {
+            "precision": 0.9403508771929825,
+            "recall": 0.9403508771929825,
+            "f1-score": 0.9403508771929825,
+            "support": 1140.0
+          },
+          "accuracy": 0.8934146341463415,
+          "macro avg": {
+            "precision": 0.880980238500077,
+            "recall": 0.8831239362743811,
+            "f1-score": 0.8820147543275842,
+            "support": 4100.0
+          },
+          "weighted avg": {
+            "precision": 0.8942002248872007,
+            "recall": 0.8934146341463415,
+            "f1-score": 0.8937739467911419,
+            "support": 4100.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            1804,
+            161,
+            0
+          ],
+          [
+            140,
+            787,
+            68
+          ],
+          [
+            0,
+            68,
+            1072
+          ]
+        ],
+        "roc_auc_ovr_macro": 0.9768
+      }
+    }
+  },
+  "business_metrics": {
+    "current_total_revenue": 466412531.74,
+    "projected_total_revenue": 485344098.51,
+    "estimated_revenue_uplift": 18931566.77,
+    "estimated_revenue_uplift_pct": 0.0406,
+    "average_recommended_price_change": 0.0561,
+    "median_recommended_price_change": 0.0225,
+    "average_sell_through_current": 0.755,
+    "average_current_window_sell_through": 0.4655,
+    "average_sell_through_expected": 0.754,
+    "estimated_sell_through_improvement": 0.0151,
+    "low_demand_sell_through_baseline": 0.7316,
+    "low_demand_sell_through_expected": 0.7467,
+    "secondary_market_leakage_reduction": 12402417.23,
+    "percentage_human_approval_required": 0.5285,
+    "percentage_capped_by_guardrails": 0.0022,
+    "average_price_gap_vs_resale_before": 63.23,
+    "average_price_gap_vs_resale_after": 34.28,
+    "fan_affordability_score": 100.0,
+    "secondary_market_leakage_before": 17386899.06,
+    "secondary_market_leakage_after": 4984481.83,
+    "underpricing_gap_before": 63.23,
+    "underpricing_gap_after": 34.28,
+    "underpricing_gap_reduction_pct": 0.4579,
+    "unsold_inventory_risk_reduction_pct": 0.0564,
+    "avg_recommendation_change_pct": 0.0561,
+    "human_approval_rate_proxy": 0.5285
+  },
+  "fairness_metrics": {
+    "generated_at_utc": "2026-05-17T05:10:23.421184+00:00",
+    "protected_attributes_used_in_model": [],
+    "fairness_only_columns": [
+      "affordability_index",
+      "affordability_segment"
+    ],
+    "model_training_policy": "Affordability variables are used only for monitoring, approval guardrails, and affordable ticket reserve simulation. They are excluded from demand, sell-through, and scalper-risk model features.",
+    "disparate_impact_warning": false,
+    "warnings": [
+      "No disproportionate value-segment price increase detected."
+    ],
+    "mitigation_suggestions": [
+      "Keep value-section price increase caps at or below 8-10%.",
+      "Reserve affordable ticket inventory for high-demand games.",
+      "Route premium games and large moves to human approval.",
+      "Monitor average and p90 price movement by affordability segment.",
+      "Use aggregated demand signals and avoid protected attributes."
+    ],
+    "summary_table": [
+      {
+        "affordability_segment": "Affluent",
+        "rows": 820,
+        "avg_affordability_index": 104.12,
+        "avg_current_price": 438.52,
+        "avg_recommended_price": 549.66,
+        "avg_price_change_pct": 0.24,
+        "p90_price_change_pct": 0.3411,
+        "approval_rate": 0.7049,
+        "price_cap_trigger_rate": 0.0085,
+        "avg_attendance_rate": 0.702,
+        "avg_sell_through": 0.453,
+        "high_demand_share": 0.141,
+        "affordable_reserve_effect": "Standard monitoring",
+        "guardrail_status": "Review: average increase above governance threshold"
+      },
+      {
+        "affordability_segment": "Mainstream",
+        "rows": 1230,
+        "avg_affordability_index": 72.03,
+        "avg_current_price": 184.54,
+        "avg_recommended_price": 198.92,
+        "avg_price_change_pct": 0.0641,
+        "p90_price_change_pct": 0.1798,
+        "approval_rate": 0.4024,
+        "price_cap_trigger_rate": 0.0,
+        "avg_attendance_rate": 0.713,
+        "avg_sell_through": 0.459,
+        "high_demand_share": 0.153,
+        "affordable_reserve_effect": "Standard monitoring",
+        "guardrail_status": "Within configured guardrails"
+      },
+      {
+        "affordability_segment": "Premium",
+        "rows": 410,
+        "avg_affordability_index": 130.05,
+        "avg_current_price": 814.32,
+        "avg_recommended_price": 1057.81,
+        "avg_price_change_pct": 0.3054,
+        "p90_price_change_pct": 0.3457,
+        "approval_rate": 1.0,
+        "price_cap_trigger_rate": 0.0049,
+        "avg_attendance_rate": 0.663,
+        "avg_sell_through": 0.424,
+        "high_demand_share": 0.117,
+        "affordable_reserve_effect": "Standard monitoring",
+        "guardrail_status": "Review: average increase above governance threshold"
+      },
+      {
+        "affordability_segment": "Value-sensitive",
+        "rows": 1640,
+        "avg_affordability_index": 45.48,
+        "avg_current_price": 70.37,
+        "avg_recommended_price": 63.73,
+        "avg_price_change_pct": -0.1041,
+        "p90_price_change_pct": -0.0425,
+        "approval_rate": 0.4171,
+        "price_cap_trigger_rate": 0.0,
+        "avg_attendance_rate": 0.765,
+        "avg_sell_through": 0.487,
+        "high_demand_share": 0.198,
+        "affordable_reserve_effect": "High protection",
+        "guardrail_status": "Within configured guardrails"
+      }
+    ]
+  },
+  "false_positive_negative_analysis": {
+    "false_positive_high_demand": "Model predicts high demand when actual demand is low; result can be prices that are too high, empty seats, fan frustration, and lost concession revenue.",
+    "false_negative_high_demand": "Model predicts low demand when actual demand is high; result can be prices that are too low, fast sellout, scalper profit, and lost venue revenue."
+  }
+}

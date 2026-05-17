@@ -1,0 +1,5 @@
+affordability_segment,rows,avg_affordability_index,avg_current_price,avg_recommended_price,avg_price_change_pct,p90_price_change_pct,approval_rate,price_cap_trigger_rate,avg_attendance_rate,avg_sell_through,high_demand_share,affordable_reserve_effect,guardrail_status
+Affluent,820,104.12,438.52,549.66,0.24,0.3411,0.7049,0.0085,0.702,0.453,0.141,Standard monitoring,Review: average increase above governance threshold
+Mainstream,1230,72.03,184.54,198.92,0.0641,0.1798,0.4024,0.0,0.713,0.459,0.153,Standard monitoring,Within configured guardrails
+Premium,410,130.05,814.32,1057.81,0.3054,0.3457,1.0,0.0049,0.663,0.424,0.117,Standard monitoring,Review: average increase above governance threshold
+Value-sensitive,1640,45.48,70.37,63.73,-0.1041,-0.0425,0.4171,0.0,0.765,0.487,0.198,High protection,Within configured guardrails

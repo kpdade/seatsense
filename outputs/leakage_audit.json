@@ -1,0 +1,32 @@
+{
+  "generated_at_utc": "2026-05-17T05:09:03.474260+00:00",
+  "passed": true,
+  "strategy": "Model features are checked against target, post-event outcome, recommended-price, and fairness-only columns before training.",
+  "feature_count": 52,
+  "forbidden_columns_found_in_features": [],
+  "missing_feature_columns": [],
+  "forbidden_columns_available_in_dataset": [
+    "actual_secondary_market_gap",
+    "affordability_index",
+    "affordability_segment",
+    "demand_index",
+    "demand_tier",
+    "final_attendance_rate",
+    "final_sell_through_rate",
+    "local_income_proxy",
+    "optimal_price_oracle",
+    "realized_demand_score",
+    "realized_revenue",
+    "recommended_price_target",
+    "revenue_per_available_seat",
+    "scalper_risk_label",
+    "scalper_risk_tier",
+    "unsold_inventory_pct"
+  ],
+  "fairness_only_columns": [
+    "affordability_index",
+    "affordability_segment",
+    "local_income_proxy"
+  ],
+  "message": "No forbidden target/post-event/fairness-only columns are used as model features."
+}

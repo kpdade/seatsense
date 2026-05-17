@@ -1,0 +1,51 @@
+{
+  "strategy": "Time-based split by season; all rows for the same game_id remain in one split.",
+  "grouping": "game_id",
+  "train_seasons": [
+    2021,
+    2022,
+    2023
+  ],
+  "validation_seasons": [
+    2024
+  ],
+  "test_seasons": [
+    2025
+  ],
+  "train_rows": 12300,
+  "validation_rows": 4100,
+  "test_rows": 4100,
+  "train_games": 246,
+  "validation_games": 82,
+  "test_games": 82,
+  "demand_tier_distribution": {
+    "train": {
+      "Low": 0.4514,
+      "Medium": 0.4046,
+      "High": 0.1441
+    },
+    "validation": {
+      "Low": 0.4327,
+      "Medium": 0.4083,
+      "High": 0.159
+    },
+    "test": {
+      "Medium": 0.4261,
+      "Low": 0.409,
+      "High": 0.1649
+    }
+  },
+  "season_coverage": {
+    "train": [
+      2021,
+      2022,
+      2023
+    ],
+    "validation": [
+      2024
+    ],
+    "test": [
+      2025
+    ]
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "generated_at_utc": "2026-05-17T05:10:23.421184+00:00",
+  "protected_attributes_used_in_model": [],
+  "fairness_only_columns": [
+    "affordability_index",
+    "affordability_segment"
+  ],
+  "model_training_policy": "Affordability variables are used only for monitoring, approval guardrails, and affordable ticket reserve simulation. They are excluded from demand, sell-through, and scalper-risk model features.",
+  "disparate_impact_warning": false,
+  "warnings": [
+    "No disproportionate value-segment price increase detected."
+  ],
+  "mitigation_suggestions": [
+    "Keep value-section price increase caps at or below 8-10%.",
+    "Reserve affordable ticket inventory for high-demand games.",
+    "Route premium games and large moves to human approval.",
+    "Monitor average and p90 price movement by affordability segment.",
+    "Use aggregated demand signals and avoid protected attributes."
+  ],
+  "summary_table": [
+    {
+      "affordability_segment": "Affluent",
+      "rows": 820,
+      "avg_affordability_index": 104.12,
+      "avg_current_price": 438.52,
+      "avg_recommended_price": 549.66,
+      "avg_price_change_pct": 0.24,
+      "p90_price_change_pct": 0.3411,
+      "approval_rate": 0.7049,
+      "price_cap_trigger_rate": 0.0085,
+      "avg_attendance_rate": 0.702,
+      "avg_sell_through": 0.453,
+      "high_demand_share": 0.141,
+      "affordable_reserve_effect": "Standard monitoring",
+      "guardrail_status": "Review: average increase above governance threshold"
+    },
+    {
+      "affordability_segment": "Mainstream",
+      "rows": 1230,
+      "avg_affordability_index": 72.03,
+      "avg_current_price": 184.54,
+      "avg_recommended_price": 198.92,
+      "avg_price_change_pct": 0.0641,
+      "p90_price_change_pct": 0.1798,
+      "approval_rate": 0.4024,
+      "price_cap_trigger_rate": 0.0,
+      "avg_attendance_rate": 0.713,
+      "avg_sell_through": 0.459,
+      "high_demand_share": 0.153,
+      "affordable_reserve_effect": "Standard monitoring",
+      "guardrail_status": "Within configured guardrails"
+    },
+    {
+      "affordability_segment": "Premium",
+      "rows": 410,
+      "avg_affordability_index": 130.05,
+      "avg_current_price": 814.32,
+      "avg_recommended_price": 1057.81,
+      "avg_price_change_pct": 0.3054,
+      "p90_price_change_pct": 0.3457,
+      "approval_rate": 1.0,
+      "price_cap_trigger_rate": 0.0049,
+      "avg_attendance_rate": 0.663,
+      "avg_sell_through": 0.424,
+      "high_demand_share": 0.117,
+      "affordable_reserve_effect": "Standard monitoring",
+      "guardrail_status": "Review: average increase above governance threshold"
+    },
+    {
+      "affordability_segment": "Value-sensitive",
+      "rows": 1640,
+      "avg_affordability_index": 45.48,
+      "avg_current_price": 70.37,
+      "avg_recommended_price": 63.73,
+      "avg_price_change_pct": -0.1041,
+      "p90_price_change_pct": -0.0425,
+      "approval_rate": 0.4171,
+      "price_cap_trigger_rate": 0.0,
+      "avg_attendance_rate": 0.765,
+      "avg_sell_through": 0.487,
+      "high_demand_share": 0.198,
+      "affordable_reserve_effect": "High protection",
+      "guardrail_status": "Within configured guardrails"
+    }
+  ]
+}
